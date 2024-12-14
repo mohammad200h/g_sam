@@ -36,10 +36,10 @@ import matplotlib.pyplot as plt
 def grounded_sam(image):
     
     # cfg
-    config_file = "GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py" ## args.config  # change the path of the model config file
-    grounded_checkpoint = "groundingdino_swint_ogc.pth"                           ## args.grounded_checkpoint  # change the path of the model
+    config_file = "/home/mamad/PhD/ros2_vsion/g_sam_ws/src/g_sam/g_sam/GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py" ## args.config  # change the path of the model config file
+    grounded_checkpoint = "/home/mamad/PhD/ros2_vsion/g_sam_ws/src/g_sam/g_sam/groundingdino_swint_ogc.pth"                           ## args.grounded_checkpoint  # change the path of the model
     sam_version = "vit_h"                                                         ## args.sam_version
-    sam_checkpoint = "sam_vit_h_4b8939.pth"                                       ## args.sam_checkpoint
+    sam_checkpoint = "/home/mamad/PhD/ros2_vsion/g_sam_ws/src/g_sam/g_sam/sam_vit_h_4b8939.pth"                                       ## args.sam_checkpoint
     # sam_hq_checkpoint = args.sam_hq_checkpoint
     # use_sam_hq = args.use_sam_hq
     # image_path = image
@@ -109,27 +109,39 @@ def grounded_sam(image):
         boxes = transformed_boxes.to(device),
         multimask_output = False,
     )
+    print("\n\n")
+    print("maskks ")
+    print("\n\n")
 
     # draw output image
-    plt.figure(figsize=(10, 10))
-    plt.imshow(image)
-    for mask in masks:
-        show_mask(mask.cpu().numpy(), plt.gca(), random_color=True)
-    for box, label in zip(boxes_filt, pred_phrases):
-        show_box(box.numpy(), plt.gca(), label)
+    # plt.figure(figsize=(10, 10))
+    # plt.imshow(image)
+    # for mask in masks:
+    #     show_mask(mask.cpu().numpy(), plt.gca(), random_color=True)
+    # for box, label in zip(boxes_filt, pred_phrases):
+    #     show_box(box.numpy(), plt.gca(), label)
 
-    plt.axis('off')
-    plt.savefig(
-        os.path.join(output_dir, "000000.png"),
-        bbox_inches="tight", dpi=300, pad_inches=0.0
-    )
+    # plt.axis('off')
+    # plt.savefig(
+    #     os.path.join(output_dir, "000000.png"),
+    #     bbox_inches="tight", dpi=300, pad_inches=0.0
+    # )
 
-    save_mask_data(output_dir, masks, boxes_filt, pred_phrases)
-    publish_mask_image(masks)
+    # save_mask_data(output_dir, masks, boxes_filt, pred_phrases)
+
+    print("\n\n")
+    print("I am here 1 ")
+    print("\n\n")
 
     torch.cuda.empty_cache()
     del predictor
     torch.cuda.empty_cache()
+
+    print("\n\n")
+    print("I am here 2 ")
+    print("\n\n")
+
+    return masks
 
 def load_image_from_array(image_array):
     # Convert numpy array to PIL Image
