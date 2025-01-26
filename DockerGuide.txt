@@ -1,0 +1,18 @@
+
+sudo xhost +local:root
+
+Build:
+sudo docker build  --network=host --build-arg UNAME=$USER --build-arg UID=$UID  -t ubuntu24:gsam .
+
+Network:
+docker network create ros2_net
+
+RUN:
+sudo docker run --runtime=nvidia -it --name g_sam \
+-v $(pwd)/g_sam_ws:$(pwd)/g_sam_ws \
+-e DISPLAY -e LOCAL_USER_ID=$(id -u) --user=$(id -u) \
+-e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+--network=ros2_net --privileged ubuntu24:gsam
+
+
+ros2 run g_sam grounded_sam_node

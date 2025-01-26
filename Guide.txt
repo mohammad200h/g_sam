@@ -1,0 +1,7 @@
+running node:
+ros2 run g_sam grounded_sam_node
+
+sending server request:
+ros2 service call /foundation_pose_regeneration \
+  foundation_pose_interfaces/srv/Registration \
+  "{prompt: {data: 'mustard'}}"
