@@ -8,7 +8,7 @@ Network:
 docker network create ros2_net
 
 RUN:
-sudo docker run --runtime=nvidia -it --name g_sam \
+sudo docker run --runtime=nvidia -it --name g_sam2 \
 -v $(pwd)/g_sam_ws:$(pwd)/g_sam_ws \
 -e DISPLAY -e LOCAL_USER_ID=$(id -u) --user=$(id -u) \
 -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
